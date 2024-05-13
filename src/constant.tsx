@@ -1,4 +1,4 @@
-export const ARTICLES = [
+export const POSTS = [
     {
         createdAt: (new Date).toString(),
         title: 'Discovery by scientists',

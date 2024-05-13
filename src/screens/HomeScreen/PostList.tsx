@@ -3,33 +3,33 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { EmptyListImage } from '../../../res';
-import { Article } from '../../models/Article';
+import { Post as Post } from '../../models/Post';
 import { StackNavigation } from '../../navigation/RootNavigator';
-import ArticleView from './ArticleView';
+import PostView from './PostView';
 
 
-interface PropsS {
-    articleList?: Article[]
+interface Props {
+    postList?: Post[]
 }
 
-export const ArticleList: React.FC<PropsS> = ({ articleList }) => {
+export const PostList: React.FC<Props> = ({ postList }) => {
     const navigation = useNavigation<StackNavigation>();
 
-    const onPressArticle = () => {
-        navigation.navigate('ArticleScreen');
+    const onPressPost = () => {
+        navigation.navigate('PostScreen');
     };
 
-    const renderItem = ({ item, index }: { item: Article, index: number }) => {
+    const renderItem = ({ item, index }: { item: Post, index: number }) => {
         return (
-            <ArticleView
-                article={item}
-                onPress={onPressArticle}
+            <PostView
+                post={item}
+                onPress={onPressPost}
             />
         );
     }
 
     //  Empty list placeholder 
-    if (!articleList || articleList?.length === 0) {
+    if (!postList || postList?.length === 0) {
         return (
             <View style={styles.emptyContainer}>
                 <EmptyListImage />
@@ -40,7 +40,7 @@ export const ArticleList: React.FC<PropsS> = ({ articleList }) => {
 
     return (
         <FlatList
-            data={articleList}
+            data={postList}
             renderItem={renderItem}
         />
     );

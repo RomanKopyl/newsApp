@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, TextInput, View } from 'react-native';
 import { AddIcon, SearchIcon } from '../../../res';
 
 

@@ -5,9 +5,9 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { RootStackParamList } from '../navigation/RootNavigator';
 
 
-type Props = NativeStackScreenProps<RootStackParamList, 'ArticleScreen'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'PostScreen'>;
 
-export const ArticleScreen: React.FC<Props> = ({ navigation }) => {
+export const PostScreen: React.FC<Props> = ({ navigation }) => {
 
     return (
         <SafeAreaView style={{
@@ -19,7 +19,7 @@ export const ArticleScreen: React.FC<Props> = ({ navigation }) => {
                 fontWeight: 'bold',
                 fontSize: 30,
             }}>
-                Article Screen
+                Post Screen
             </Text>
             <TouchableOpacity
                 style={{

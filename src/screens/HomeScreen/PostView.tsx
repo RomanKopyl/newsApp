@@ -1,44 +1,44 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native'
-import { articleImage } from '../../../res'
-import { Article } from '../../models/Article'
+import { postImage } from '../../../res'
+import { Post } from '../../models/Post'
 
 interface Props {
-    article: Article
+    post: Post
     style?: ViewStyle
     onPress?: () => void
 }
 
-const ArticleView = ({ article, style, onPress }: Props) => {
+const PostView = ({ post, style, onPress }: Props) => {
     return (
         <TouchableOpacity
             style={{ ...styles.container, ...(style ?? []) }}
             onPress={onPress}
         >
             <Image
-                source={articleImage}
+                source={postImage}
                 style={styles.image}
             />
 
             <View style={styles.textContainer}>
 
-                <Text style={styles.title}>{article.title}</Text>
+                <Text style={styles.title}>{post.title}</Text>
 
                 <Text
                     numberOfLines={1}
                     style={styles.text}
                 >
-                    {article.text}
+                    {post.text}
                 </Text>
 
-                <Text style={styles.date}>{article.createdAt}</Text>
+                <Text style={styles.date}>{post.createdAt}</Text>
 
             </View>
         </TouchableOpacity>
     )
 }
 
-export default ArticleView;
+export default PostView;
 
 const styles = StyleSheet.create({
     container: {

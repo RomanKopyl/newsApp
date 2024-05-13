@@ -1,4 +1,4 @@
-export interface Article {
+export interface Post {
     createdAt?: string
     title?: string
     text?: string

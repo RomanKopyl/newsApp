@@ -1,20 +1,20 @@
 
 import React, { useMemo, useState } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { ARTICLES } from '../../constant';
-import { Article } from '../../models/Article';
-import { ArticleList } from './ArticleList';
+import { POSTS } from '../../constant';
+import { Post } from '../../models/Post';
+import { PostList } from './PostList';
 import { SearchView } from './SearchView';
 
 
 export const HomeScreen: React.FC = () => {
     const [searchValue, setSearchValue] = useState('');
-    const [articleList, setArticleList] = useState<Article[] | undefined>(ARTICLES);
+    const [postList, setPostList] = useState<Post[] | undefined>(POSTS);
 
     const filteredList = useMemo(() => {
-        if (searchValue.length === 0) return articleList;
+        if (searchValue.length === 0) return postList;
 
-        const list: Article[] = [...(articleList ?? [])].filter(item => {
+        const list: Post[] = [...(postList ?? [])].filter(item => {
             const isTitleIncludes = item.title?.includes(searchValue);
             if (isTitleIncludes) return true;
 
@@ -40,7 +40,7 @@ export const HomeScreen: React.FC = () => {
                 onChangeValue={onChangeFilterText}
             />
 
-            <ArticleList articleList={filteredList} />
+            <PostList postList={filteredList} />
 
         </SafeAreaView>
     );
