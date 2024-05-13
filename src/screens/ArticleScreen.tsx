@@ -13,12 +13,13 @@ export const ArticleScreen: React.FC<Props> = ({ navigation }) => {
         <SafeAreaView style={{
             flex: 1,
             alignItems: 'center',
+            justifyContent: 'center',
         }}>
             <Text style={{
                 fontWeight: 'bold',
                 fontSize: 30,
             }}>
-                Image Screen
+                Article Screen
             </Text>
             <TouchableOpacity
                 style={{
