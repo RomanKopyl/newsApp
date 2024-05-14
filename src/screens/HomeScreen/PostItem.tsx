@@ -1,6 +1,5 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native'
-import { postImage } from '../../../res'
 import { Post } from '../../models'
 
 interface Props {
@@ -9,26 +8,28 @@ interface Props {
     onPress?: () => void
 }
 
-const PostView = ({ post, style, onPress }: Props) => {
+const PostItem = ({ post, style, onPress }: Props) => {
     return (
         <TouchableOpacity
             style={{ ...styles.container, ...(style ?? []) }}
             onPress={onPress}
         >
-            <Image
-                source={postImage}
-                style={styles.image}
-            />
-
+            {
+                post.imageUrl &&
+                <Image
+                    source={{ uri: post.imageUrl }}
+                    style={styles.image}
+                />
+            }
             <View style={styles.textContainer}>
 
                 <Text style={styles.title}>{post.title}</Text>
 
                 <Text
                     numberOfLines={1}
-                    style={styles.text}
+                    style={styles.message}
                 >
-                    {post.text}
+                    {post.message}
                 </Text>
 
                 <Text style={styles.date}>{post.createdAt}</Text>
@@ -38,7 +39,7 @@ const PostView = ({ post, style, onPress }: Props) => {
     )
 }
 
-export default PostView;
+export default PostItem;
 
 const styles = StyleSheet.create({
     container: {
@@ -56,14 +57,15 @@ const styles = StyleSheet.create({
         objectFit: 'contain'
     },
     textContainer: {
-        paddingHorizontal: 18
+        paddingHorizontal: 18,
+        marginTop: 18,
     },
     title: {
         fontSize: 20,
         fontWeight: '600',
         color: 'rgba(0, 0, 0, 1)',
     },
-    text: {
+    message: {
         fontSize: 16,
         fontWeight: '300',
         color: 'rgba(0, 0, 0, 1)',

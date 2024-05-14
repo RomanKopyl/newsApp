@@ -1,29 +1,31 @@
 
-import React, { useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { POSTS } from '../../constant';
-import { Post } from '../../models';
+import { DataContext } from '../../navigation/RootNavigator';
 import { PostList } from './PostList';
 import { SearchView } from './SearchView';
 
 
 export const HomeScreen: React.FC = () => {
     const [searchValue, setSearchValue] = useState('');
-    const [postList, setPostList] = useState<Post[] | undefined>(POSTS);
+
+    const data = useContext(DataContext);
 
     const filteredList = useMemo(() => {
+        const postList = data?.posts;
+
         if (searchValue.length === 0) return postList;
 
-        const list: Post[] = [...(postList ?? [])].filter(item => {
+        const list = postList?.filter(item => {
             const isTitleIncludes = item.title?.includes(searchValue);
             if (isTitleIncludes) return true;
 
-            const isTextIncludes = item.text?.includes(searchValue);
-            return isTextIncludes;
+            const isMessageIncludes = item.message?.includes(searchValue);
+            return isMessageIncludes;
         });
 
         return list;
-    }, [searchValue]);
+    }, [searchValue, data]);
 
 
     const onChangeFilterText = (value: string) => {

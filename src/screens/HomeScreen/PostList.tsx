@@ -5,7 +5,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { EmptyListImage } from '../../../res';
 import { Post } from '../../models';
 import { StackNavigation } from '../../navigation/RootNavigator';
-import PostView from './PostView';
+import PostItem from './PostItem';
 
 
 interface Props {
@@ -15,15 +15,15 @@ interface Props {
 export const PostList: React.FC<Props> = ({ postList }) => {
     const navigation = useNavigation<StackNavigation>();
 
-    const onPressPost = () => {
-        navigation.navigate('PostScreen');
+    const onPressPost = (item: Post) => {
+        navigation.navigate('PostScreen', { post: item });
     };
 
     const renderItem = ({ item, index }: { item: Post, index: number }) => {
         return (
-            <PostView
+            <PostItem
                 post={item}
-                onPress={onPressPost}
+                onPress={() => onPressPost(item)}
             />
         );
     }
