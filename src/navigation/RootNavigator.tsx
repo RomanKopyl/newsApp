@@ -1,10 +1,10 @@
 import firestore from '@react-native-firebase/firestore';
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
 import { createContext, useEffect, useState } from "react";
-import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
 import { Data, Post } from "../models";
-import CreateScreen from "../screens/CreatePost/indes";
+import CreateScreen from "../screens/CreatePost";
 import { HomeScreen } from "../screens/HomeScreen";
+import ModalScreen from '../screens/ModalScreen';
 import { PostScreen } from "../screens/PostScreen";
 
 
@@ -12,11 +12,11 @@ export type RootStackParamList = {
     HomeScreen: undefined,
     PostScreen: { post: Post } | undefined,
     CreateScreen: undefined,
-    // ImageScreen: { imageId: string } | undefined,
+    ModalScreen: { postId: string } | undefined,
 };
-export type StackNavigation = NativeStackNavigationProp<RootStackParamList>;
+export type StackNavigation = StackNavigationProp<RootStackParamList>;
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 
 export const DataContext = createContext<Data | undefined>(undefined);
 
@@ -44,7 +44,6 @@ export const RootNavigator: React.FC = () => {
                 });
 
                 setData({ posts: posts });
-                console.log('POSTS', posts.length);
 
                 setLoading(false);
             });
@@ -55,22 +54,43 @@ export const RootNavigator: React.FC = () => {
 
     return (
         <DataContext.Provider value={data}>
-            <Stack.Navigator initialRouteName={'HomeScreen'}>
-                <Stack.Screen
-                    name={'HomeScreen'}
-                    component={HomeScreen}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name={'PostScreen'}
-                    component={PostScreen}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name={'CreateScreen'}
-                    component={CreateScreen}
-                    options={{ headerShown: false }}
-                />
+            <Stack.Navigator initialRouteName={'HomeScreen'} >
+
+                <Stack.Group>
+                    <Stack.Screen
+                        name={'HomeScreen'}
+                        component={HomeScreen}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={'PostScreen'}
+                        component={PostScreen}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={'CreateScreen'}
+                        component={CreateScreen}
+                        options={{ headerShown: false }}
+                    />
+                </Stack.Group>
+
+                <Stack.Group screenOptions={{
+                    presentation: 'modal',
+                    cardStyle: {
+                        backgroundColor: 'transparent',
+                        shadowColor: 'transparent'
+                    },
+                }}>
+                    <Stack.Screen
+                        name="ModalScreen"
+                        component={ModalScreen}
+                        options={{
+                            headerShown: false,
+                            detachPreviousScreen: false,
+                        }}
+                    />
+                </Stack.Group>
+
             </Stack.Navigator>
         </DataContext.Provider>
     );

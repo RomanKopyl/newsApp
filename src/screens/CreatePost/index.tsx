@@ -1,7 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
-import { Alert, Dimensions, SafeAreaView, ScrollView, StyleSheet, TextInput } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, SafeAreaView, ScrollView, StyleSheet, TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
@@ -9,7 +9,7 @@ import { Post } from '../../models';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { showError } from '../../utils/helper';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'CreateScreen'>;
+type Props = StackScreenProps<RootStackParamList, 'CreateScreen'>;
 
 const CreateScreen: React.FC<Props> = ({ navigation }) => {
     const [title, setTitle] = useState('');
@@ -17,6 +17,14 @@ const CreateScreen: React.FC<Props> = ({ navigation }) => {
     const [link, setLink] = useState('');
     const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [disabled, setDisabled] = useState(false);
+
+    useEffect(() => {
+        const hasTitle = title.length > 0;
+        const hasMessage = message.length > 0;
+
+        setDisabled(!hasTitle || !hasMessage);
+    }, [title, message]);
 
 
     const onChangeTitle = (value: string) => {
@@ -36,19 +44,7 @@ const CreateScreen: React.FC<Props> = ({ navigation }) => {
     }
 
     const onPressPublic = () => {
-        console.log('PUBLIC');
-
-
         const postId = uuid.v4();
-
-        if (!title || title.length == 0) {
-            Alert.alert('Plese, enter title');
-            return;
-        }
-        if (!message || message.length == 0) {
-            Alert.alert('Plese, enter message');
-            return;
-        }
 
         const newPost: Post = {
             id: postId.toString(),
@@ -74,7 +70,7 @@ const CreateScreen: React.FC<Props> = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-                <Header title='New post' />
+                <Header title={'New post'} />
 
                 <TextInput
                     style={styles.input}
@@ -113,6 +109,8 @@ const CreateScreen: React.FC<Props> = ({ navigation }) => {
             <Button
                 style={{ marginTop: 'auto' }}
                 title='Public'
+                isLoading={isLoading}
+                disabled={disabled}
                 onPress={onPressPublic}
             />
         </SafeAreaView>

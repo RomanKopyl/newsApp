@@ -8,6 +8,7 @@ interface Props {
     onPress?: () => void
     type?: ButtonType
     isLoading?: boolean
+    disabled?: boolean
 }
 
 const getColor = (type: ButtonType) => {
@@ -16,8 +17,6 @@ const getColor = (type: ButtonType) => {
             return 'rgba(69, 110, 254, 1)';
         case ButtonType.delete:
             return 'rgba(255, 99, 99, 1)';
-        case ButtonType.close:
-            return 'rgba(69, 110, 254, 1)';
 
         default:
             return 'rgba(69, 110, 254, 1)';
@@ -30,18 +29,20 @@ const Button: React.FC<Props> = ({
     onPress,
     style,
     isLoading = false,
+    disabled = false,
 }) => {
     const color = getColor(type);
 
     return (
         <TouchableOpacity
             style={{
+                width: '100%',
                 backgroundColor: color,
-                opacity: isLoading ? 0.5 : 1,
+                opacity: (disabled || isLoading) ? 0.5 : 1,
                 ...styles.container,
                 ...style,
             }}
-            disabled={isLoading}
+            disabled={disabled || isLoading}
             onPress={onPress}
         >
             <Text style={styles.textButton}>{title}</Text>

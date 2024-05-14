@@ -1,13 +1,14 @@
 
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
 import React from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import Header from '../components/Header';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { timeConverter } from '../utils/helper';
+import { StackScreenProps } from '@react-navigation/stack';
 
 
-type Props = NativeStackScreenProps<RootStackParamList, 'PostScreen'>;
+type Props = StackScreenProps<RootStackParamList, 'PostScreen'>;
 
 export const PostScreen: React.FC<Props> = ({ route }) => {
     const post = route.params?.post;
@@ -53,7 +54,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255, 255, 255, 1)',
     },
     header: {
-        // marginTop: 22,
         height: 90,
     },
     image: {

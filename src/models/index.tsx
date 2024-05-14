@@ -9,8 +9,7 @@ export interface Post {
 
 export enum ButtonType {
     action = 'action',
-    delete = 'delete',
-    close = 'cancel'
+    delete = 'delete'
 }
 
 export interface Data {

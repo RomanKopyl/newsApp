@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native'
+import { GestureResponderEvent, Image, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native'
 import { Post } from '../../models'
 import { timeConverter } from '../../utils/helper'
 
@@ -7,13 +7,21 @@ interface Props {
     post: Post
     style?: ViewStyle
     onPress?: () => void
+    onLongPress?: (event: GestureResponderEvent) => void
 }
 
-const PostItem = ({ post, style, onPress }: Props) => {
+const PostItem = ({
+    post,
+    style,
+    onPress,
+    onLongPress,
+}: Props) => {
+
     return (
         <TouchableOpacity
             style={{ ...styles.container, ...(style ?? []) }}
             onPress={onPress}
+            onLongPress={onLongPress}
         >
             {
                 post.imageUrl &&
