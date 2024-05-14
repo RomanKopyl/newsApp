@@ -10,11 +10,11 @@ import PostItem from './PostItem';
 
 interface Props {
     postList?: Post[]
+    isLoading?: boolean
 }
 
-export const PostList: React.FC<Props> = ({ postList }) => {
+export const PostList: React.FC<Props> = ({ postList, isLoading = false }) => {
     const navigation = useNavigation<StackNavigation>();
-    const [isLoading, setIsLoading] = useState(false);
 
     const onPressPost = (item: Post) => {
         navigation.navigate('PostScreen', { post: item });
@@ -40,16 +40,6 @@ export const PostList: React.FC<Props> = ({ postList }) => {
         );
     }
 
-    //  Empty list placeholder 
-    if (!postList || postList?.length === 0) {
-        return (
-            <View style={styles.emptyContainer}>
-                <EmptyListImage />
-                <Text style={styles.textPlaceholder}>No results found</Text>
-            </View>
-        );
-    }
-
     if (isLoading) {
         return (
             <View style={{
@@ -59,6 +49,16 @@ export const PostList: React.FC<Props> = ({ postList }) => {
                 <ActivityIndicator size={'large'} />
             </View>
         )
+    }
+
+    //  Empty list placeholder 
+    if (!postList || postList?.length === 0) {
+        return (
+            <View style={styles.emptyContainer}>
+                <EmptyListImage />
+                <Text style={styles.textPlaceholder}>No results found</Text>
+            </View>
+        );
     }
 
     return (

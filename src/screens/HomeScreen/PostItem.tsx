@@ -1,7 +1,7 @@
 import React from 'react'
 import { GestureResponderEvent, Image, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native'
 import { Post } from '../../models'
-import { timeConverter } from '../../utils/helper'
+import { timeConverter } from '../../helper'
 
 interface Props {
     post: Post

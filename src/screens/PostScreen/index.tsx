@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import Header from '../components/Header';
-import { RootStackParamList } from '../navigation/RootNavigator';
-import { timeConverter } from '../utils/helper';
+import Header from '../../components/Header';
+import { RootStackParamList } from '../../navigation/RootNavigator';
+import { timeConverter } from '../../helper';
 import { StackScreenProps } from '@react-navigation/stack';
 
 

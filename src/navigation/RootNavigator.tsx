@@ -1,7 +1,6 @@
-import firestore from '@react-native-firebase/firestore';
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
-import { createContext, useEffect, useState } from "react";
-import { Data, Post } from "../models";
+import { DataProvider } from '../dataContext';
+import { Post } from "../models";
 import CreateScreen from "../screens/CreatePost";
 import { HomeScreen } from "../screens/HomeScreen";
 import ModalScreen from '../screens/ModalScreen';
@@ -18,42 +17,11 @@ export type StackNavigation = StackNavigationProp<RootStackParamList>;
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-export const DataContext = createContext<Data | undefined>(undefined);
-
 
 export const RootNavigator: React.FC = () => {
-    const [data, setData] = useState<Data | undefined>(undefined);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const subscriber = firestore()
-            .collection('posts')
-            .onSnapshot(querySnapshot => {
-                const posts: Post[] = [];
-
-                if (!querySnapshot) {
-                    console.log('Collection is null');
-                    return;
-                }
-
-                querySnapshot.forEach(documentSnapshot => {
-                    posts.push({
-                        ...documentSnapshot.data(),
-                        id: documentSnapshot.id,
-                    });
-                });
-
-                setData({ posts: posts });
-
-                setLoading(false);
-            });
-
-        // Unsubscribe from events when no longer in use
-        return () => subscriber();
-    }, []);
 
     return (
-        <DataContext.Provider value={data}>
+        <DataProvider>
             <Stack.Navigator initialRouteName={'HomeScreen'} >
 
                 <Stack.Group>
@@ -92,6 +60,6 @@ export const RootNavigator: React.FC = () => {
                 </Stack.Group>
 
             </Stack.Navigator>
-        </DataContext.Provider>
+        </DataProvider>
     );
 };

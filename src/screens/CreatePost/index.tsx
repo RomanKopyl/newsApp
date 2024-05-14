@@ -7,7 +7,7 @@ import Button from '../../components/Button';
 import Header from '../../components/Header';
 import { Post } from '../../models';
 import { RootStackParamList } from '../../navigation/RootNavigator';
-import { showError } from '../../utils/helper';
+import { showError } from '../../helper';
 
 type Props = StackScreenProps<RootStackParamList, 'CreateScreen'>;
 

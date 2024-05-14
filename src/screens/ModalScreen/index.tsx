@@ -5,7 +5,7 @@ import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from 'react-nat
 import Button from '../../components/Button';
 import { ButtonType } from '../../models';
 import { RootStackParamList } from '../../navigation/RootNavigator';
-import { showError, showMessage } from '../../utils/helper';
+import { showError, showMessage } from '../../helper';
 
 type Props = StackScreenProps<RootStackParamList, 'ModalScreen'>;
 

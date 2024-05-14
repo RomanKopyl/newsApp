@@ -1,9 +1,9 @@
 
 import React, { useContext, useMemo, useState } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { DataContext } from '../../navigation/RootNavigator';
 import { PostList } from './PostList';
 import { SearchView } from './SearchView';
+import { DataContext } from '../../dataContext';
 
 
 export const HomeScreen: React.FC = () => {
@@ -42,7 +42,10 @@ export const HomeScreen: React.FC = () => {
                 onChangeValue={onChangeFilterText}
             />
 
-            <PostList postList={filteredList} />
+            <PostList
+                isLoading={data?.isLoading}
+                postList={filteredList}
+            />
 
         </SafeAreaView>
     );
