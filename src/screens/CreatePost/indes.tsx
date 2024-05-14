@@ -1,9 +1,13 @@
+import firestore from '@react-native-firebase/firestore';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
-import { Dimensions, SafeAreaView, ScrollView, StyleSheet, TextInput } from 'react-native';
-import Header from '../../components/Header';
-import { RootStackParamList } from '../../navigation/RootNavigator';
+import { Alert, Dimensions, SafeAreaView, ScrollView, StyleSheet, TextInput } from 'react-native';
+import uuid from 'react-native-uuid';
 import Button from '../../components/Button';
+import Header from '../../components/Header';
+import { Post } from '../../models';
+import { RootStackParamList } from '../../navigation/RootNavigator';
+import { showError } from '../../utils/helper';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CreateScreen'>;
 
@@ -11,7 +15,8 @@ const CreateScreen: React.FC<Props> = ({ navigation }) => {
     const [title, setTitle] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [link, setLink] = useState('');
-    const [text, setText] = useState('');
+    const [message, setMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
 
     const onChangeTitle = (value: string) => {
@@ -26,13 +31,43 @@ const CreateScreen: React.FC<Props> = ({ navigation }) => {
         setLink(value);
     }
 
-    const onChangeText = (value: string) => {
-        setText(value);
+    const onChangeMessage = (value: string) => {
+        setMessage(value);
     }
 
     const onPressPublic = () => {
         console.log('PUBLIC');
-        navigation.goBack();
+
+
+        const postId = uuid.v4();
+
+        if (!title || title.length == 0) {
+            Alert.alert('Plese, enter title');
+            return;
+        }
+        if (!message || message.length == 0) {
+            Alert.alert('Plese, enter message');
+            return;
+        }
+
+        const newPost: Post = {
+            id: postId.toString(),
+            title,
+            message,
+            createdAt: (new Date()).toISOString(),
+            link,
+            imageUrl,
+        };
+
+        setIsLoading(true);
+        firestore().collection('posts')
+            .doc(postId.toString())
+            .set(newPost)
+            .then(() => {
+                navigation.goBack();
+            })
+            .catch(error => showError(error))
+            .finally(() => setIsLoading(false));
     }
 
 
@@ -70,8 +105,8 @@ const CreateScreen: React.FC<Props> = ({ navigation }) => {
                         ...styles.messageInput,
                     }}
                     placeholder='Type  your message here..*'
-                    onChangeText={onChangeText}
-                    value={text}
+                    onChangeText={onChangeMessage}
+                    value={message}
                 />
             </ScrollView>
 

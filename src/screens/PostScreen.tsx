@@ -4,19 +4,24 @@ import React from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import Header from '../components/Header';
 import { RootStackParamList } from '../navigation/RootNavigator';
+import { timeConverter } from '../utils/helper';
 
 
 type Props = NativeStackScreenProps<RootStackParamList, 'PostScreen'>;
 
 export const PostScreen: React.FC<Props> = ({ route }) => {
     const post = route.params?.post;
+    console.log(post?.createdAt);
+
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header
-                style={styles.header}
-                title={post?.title}
-            />
+            <View style={styles.headerContainer}>
+                <Header
+                    style={styles.header}
+                    title={post?.title}
+                />
+            </View>
             {
                 post?.imageUrl &&
                 <Image
@@ -25,9 +30,12 @@ export const PostScreen: React.FC<Props> = ({ route }) => {
                 />
             }
             <View style={styles.textContainer}>
-                <Text style={styles.date}>
-                    Sunday, 9 May 2021
-                </Text>
+                {
+                    post?.createdAt &&
+                    <Text style={styles.date}>
+                        {timeConverter(post?.createdAt)}
+                    </Text>
+                }
                 <Text style={styles.message}>
                     {post?.message}
                 </Text>
@@ -40,11 +48,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    header: {
+    headerContainer: {
         paddingHorizontal: 23,
-        marginTop: 22,
-        // marginBottom: 21,
         backgroundColor: 'rgba(255, 255, 255, 1)',
+    },
+    header: {
+        // marginTop: 22,
+        height: 90,
     },
     image: {
         width: '100%',

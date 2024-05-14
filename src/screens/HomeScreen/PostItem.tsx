@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native'
 import { Post } from '../../models'
+import { timeConverter } from '../../utils/helper'
 
 interface Props {
     post: Post
@@ -22,18 +23,19 @@ const PostItem = ({ post, style, onPress }: Props) => {
                 />
             }
             <View style={styles.textContainer}>
-
                 <Text style={styles.title}>{post.title}</Text>
-
                 <Text
                     numberOfLines={1}
                     style={styles.message}
                 >
                     {post.message}
                 </Text>
-
-                <Text style={styles.date}>{post.createdAt}</Text>
-
+                {
+                    post?.createdAt &&
+                    <Text style={styles.date}>
+                        {timeConverter(post?.createdAt)}
+                    </Text>
+                }
             </View>
         </TouchableOpacity>
     )
