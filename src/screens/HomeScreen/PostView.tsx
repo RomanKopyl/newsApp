@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native'
 import { postImage } from '../../../res'
-import { Post } from '../../models/Post'
+import { Post } from '../../models'
 
 interface Props {
     post: Post

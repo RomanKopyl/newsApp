@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { EmptyListImage } from '../../../res';
-import { Post as Post } from '../../models/Post';
+import { Post } from '../../models';
 import { StackNavigation } from '../../navigation/RootNavigator';
 import PostView from './PostView';
 

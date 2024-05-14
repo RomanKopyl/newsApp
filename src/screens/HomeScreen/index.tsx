@@ -2,7 +2,7 @@
 import React, { useMemo, useState } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { POSTS } from '../../constant';
-import { Post } from '../../models/Post';
+import { Post } from '../../models';
 import { PostList } from './PostList';
 import { SearchView } from './SearchView';
 

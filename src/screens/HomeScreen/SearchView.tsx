@@ -2,6 +2,9 @@
 import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { AddIcon, SearchIcon } from '../../../res';
+import IconButton from '../../components/IconButton';
+import { StackNavigation } from '../../navigation/RootNavigator';
+import { useNavigation } from '@react-navigation/native';
 
 
 interface Props {
@@ -10,6 +13,11 @@ interface Props {
 }
 
 export const SearchView: React.FC<Props> = ({ value, onChangeValue }) => {
+    const navigation = useNavigation<StackNavigation>();
+
+    const goToCreatePost = () => {
+        navigation.navigate('CreateScreen');
+    };
 
     return (
         <View style={styles.container}>
@@ -26,9 +34,11 @@ export const SearchView: React.FC<Props> = ({ value, onChangeValue }) => {
                 value={value}
             />
 
-            <View style={styles.addButton}>
-                <AddIcon />
-            </View>
+            <IconButton
+                style={styles.addButton}
+                icon={<AddIcon />}
+                onPress={goToCreatePost}
+            />
         </View>
     );
 };
@@ -51,12 +61,6 @@ const styles = StyleSheet.create({
         zIndex: 10,
     },
     addButton: {
-        width: 47,
-        height: 47,
-        backgroundColor: 'rgba(164, 169, 174, 0.15)',
-        borderRadius: 23.5,
-        justifyContent: 'center',
-        alignItems: 'center',
         marginLeft: 10,
     },
 });
