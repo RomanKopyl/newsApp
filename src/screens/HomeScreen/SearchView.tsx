@@ -23,7 +23,7 @@ export const SearchView: React.FC<Props> = ({ value, onChangeValue }) => {
         <View style={styles.container}>
             <SearchIcon style={{
                 position: 'absolute',
-                left: 14,
+                left: 44,
                 top: 11,
             }} />
 
@@ -46,8 +46,10 @@ export const SearchView: React.FC<Props> = ({ value, onChangeValue }) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        marginTop: 30,
         alignItems: 'center',
+        marginTop: 30,
+        paddingHorizontal: 30,
+        paddingBottom: 10,
     },
     searchInput: {
         flexDirection: 'row',

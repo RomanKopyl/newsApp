@@ -1,7 +1,7 @@
 import React from 'react'
 import { GestureResponderEvent, Image, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native'
-import { Post } from '../../models'
 import { timeConverter } from '../../helper'
+import { Post } from '../../models'
 
 interface Props {
     post: Post
@@ -19,31 +19,33 @@ const PostItem = ({
 
     return (
         <TouchableOpacity
-            style={{ ...styles.container, ...(style ?? []) }}
+            style={[styles.container, style]}
             onPress={onPress}
             onLongPress={onLongPress}
         >
-            {
-                post.imageUrl &&
-                <Image
-                    source={{ uri: post.imageUrl }}
-                    style={styles.image}
-                />
-            }
-            <View style={styles.textContainer}>
-                <Text style={styles.title}>{post.title}</Text>
-                <Text
-                    numberOfLines={1}
-                    style={styles.message}
-                >
-                    {post.message}
-                </Text>
+            <View style={[styles.content]}>
                 {
-                    post?.createdAt &&
-                    <Text style={styles.date}>
-                        {timeConverter(post?.createdAt)}
-                    </Text>
+                    post.imageUrl &&
+                    <Image
+                        source={{ uri: post.imageUrl }}
+                        style={styles.image}
+                    />
                 }
+                <View style={styles.textContainer}>
+                    <Text style={styles.title}>{post.title}</Text>
+                    <Text
+                        numberOfLines={1}
+                        style={styles.message}
+                    >
+                        {post.message}
+                    </Text>
+                    {
+                        post?.createdAt &&
+                        <Text style={styles.date}>
+                            {timeConverter(post?.createdAt)}
+                        </Text>
+                    }
+                </View>
             </View>
         </TouchableOpacity>
     )
@@ -54,12 +56,19 @@ export default PostItem;
 const styles = StyleSheet.create({
     container: {
         width: '100%',
+        marginTop: 40,
+        paddingHorizontal: 30,
+    },
+    content: {
         backgroundColor: 'rgba(110, 117, 136, 0.07)',
         justifyContent: 'flex-start',
-        paddingBottom: 19,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
-        marginTop: 40,
+        paddingBottom: 19,
+        // shadowColor: '#000',
+        // shadowOffset: { width: 1, height: 5 },
+        // shadowOpacity: 0.40,
+        // shadowRadius: 3,
     },
     image: {
         width: '100%',

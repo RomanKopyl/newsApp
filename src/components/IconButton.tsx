@@ -1,8 +1,8 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity, ViewStyle } from 'react-native'
 
 interface Props {
-    style?: TouchableOpacity
+    style?: ViewStyle
     icon: React.ReactElement
     onPress?: () => void
 }
@@ -10,7 +10,7 @@ interface Props {
 const IconButton: React.FC<Props> = ({ icon, onPress, style }) => {
     return (
         <TouchableOpacity
-            style={{ ...styles.container, ...style }}
+            style={[styles.container, style]}
             onPress={onPress}
         >
             {

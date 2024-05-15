@@ -1,6 +1,6 @@
 
 import React, { useContext, useMemo, useState } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { PostList } from './PostList';
 import { SearchView } from './SearchView';
 import { DataContext } from '../../dataContext';
@@ -36,17 +36,17 @@ export const HomeScreen: React.FC = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <View style={styles.page}>
+                <SearchView
+                    value={searchValue}
+                    onChangeValue={onChangeFilterText}
+                />
 
-            <SearchView
-                value={searchValue}
-                onChangeValue={onChangeFilterText}
-            />
-
-            <PostList
-                isLoading={data?.isLoading}
-                postList={filteredList}
-            />
-
+                <PostList
+                    isLoading={data?.isLoading}
+                    postList={filteredList}
+                />
+            </View>
         </SafeAreaView>
     );
 };
@@ -55,6 +55,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        paddingHorizontal: 30,
     },
+    page: {
+        flex: 1,
+        // marginHorizontal: 30,
+    }
 });
