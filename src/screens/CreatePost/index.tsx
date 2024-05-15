@@ -1,58 +1,57 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import firestore from '@react-native-firebase/firestore';
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useEffect, useState } from 'react';
-import { Dimensions, SafeAreaView, ScrollView, StyleSheet, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Dimensions, SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import uuid from 'react-native-uuid';
+import { z } from 'zod';
 import Button from '../../components/Button';
+import FormInput from '../../components/FormInput';
 import Header from '../../components/Header';
+import { showError } from '../../helper';
 import { Post } from '../../models';
 import { RootStackParamList } from '../../navigation/RootNavigator';
-import { showError } from '../../helper';
+
+const formSchema = z.object({
+    title: z.string().min(3, 'Title must be at least 3 characters'),
+    imageUrl: z.string().url('Please enter a valid imageUrl'),
+    link: z.string().url('Please enter a valid imageUrl'),
+    message: z.string().min(8, 'Message must be at least 8 characters'),
+});
+
+export interface FormInterface {
+    title: string;
+    imageUrl: string;
+    link: string;
+    message: string;
+}
 
 type Props = StackScreenProps<RootStackParamList, 'CreateScreen'>;
 
 const CreateScreen: React.FC<Props> = ({ navigation }) => {
-    const [title, setTitle] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
-    const [link, setLink] = useState('');
-    const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [disabled, setDisabled] = useState(false);
 
-    useEffect(() => {
-        const hasTitle = title.length > 0;
-        const hasMessage = message.length > 0;
+    const { control, handleSubmit } = useForm<FormInterface>({
+        defaultValues: {
+            title: '',
+            imageUrl: '',
+            link: '',
+            message: '',
+        },
+        resolver: zodResolver(formSchema),
+    });
 
-        setDisabled(!hasTitle || !hasMessage);
-    }, [title, message]);
-
-
-    const onChangeTitle = (value: string) => {
-        setTitle(value);
-    }
-
-    const onChangeImageUrl = (value: string) => {
-        setImageUrl(value);
-    }
-
-    const onChangeLink = (value: string) => {
-        setLink(value);
-    }
-
-    const onChangeMessage = (value: string) => {
-        setMessage(value);
-    }
-
-    const onPressPublic = () => {
+    const onSubmit = (data: FormInterface) => {
         const postId = uuid.v4();
 
         const newPost: Post = {
             id: postId.toString(),
-            title,
-            message,
+            title: data.title,
+            message: data.message,
             createdAt: (new Date()).toISOString(),
-            link,
-            imageUrl,
+            link: data.link,
+            imageUrl: data.imageUrl,
         };
 
         setIsLoading(true);
@@ -66,52 +65,45 @@ const CreateScreen: React.FC<Props> = ({ navigation }) => {
             .finally(() => setIsLoading(false));
     }
 
-
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView>
+            <ScrollView style={styles.formContainer}>
                 <Header title={'New post'} />
 
-                <TextInput
-                    style={styles.input}
+                <FormInput
+                    control={control}
+                    name={'title'}
                     placeholder='Title*'
-                    onChangeText={onChangeTitle}
-                    value={title}
                 />
 
-                <TextInput
-                    style={styles.input}
+                <FormInput
+                    control={control}
+                    name={'imageUrl'}
                     placeholder='Image url'
-                    onChangeText={onChangeImageUrl}
-                    value={imageUrl}
                 />
 
-                <TextInput
-                    style={styles.input}
+                <FormInput
+                    control={control}
+                    name={'link'}
                     placeholder='Link'
-                    onChangeText={onChangeLink}
-                    value={link}
                 />
 
-                <TextInput
+                <FormInput
+                    control={control}
+                    name={'message'}
                     numberOfLines={7}
                     multiline={true}
-                    style={{
-                        ...styles.input,
-                        ...styles.messageInput,
-                    }}
+                    style={styles.messageInput}
                     placeholder='Type  your message here..*'
-                    onChangeText={onChangeMessage}
-                    value={message}
                 />
+
             </ScrollView>
 
             <Button
                 style={{ marginTop: 'auto' }}
                 title='Public'
                 isLoading={isLoading}
-                disabled={disabled}
-                onPress={onPressPublic}
+                onPress={handleSubmit(onSubmit)}
             />
         </SafeAreaView>
     )
@@ -128,6 +120,9 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         paddingBottom: 50,
     },
+    formContainer: {
+        marginBottom: 25,
+    },
     backButton: {
         position: 'absolute',
         left: 0,
@@ -138,19 +133,9 @@ const styles = StyleSheet.create({
         color: 'rgba(35, 48, 59, 1)',
         textAlign: 'center',
     },
-    input: {
-        backgroundColor: 'rgba(164, 169, 174, 0.15)',
-        borderRadius: 10,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        paddingHorizontal: 30,
-        paddingVertical: 18,
-        marginTop: 25,
-    },
     messageInput: {
         height: 153,
         lineHeight: 25,
         textAlignVertical: 'top',
-        marginBottom: 25,
     },
 })

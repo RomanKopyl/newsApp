@@ -11,6 +11,7 @@ const DataProvider = ({ children }: { children: ReactElement }) => {
     useEffect(() => {
         const subscriber = firestore()
             .collection('posts')
+            .orderBy('createdAt', "desc")
             .onSnapshot(querySnapshot => {
                 const posts: Post[] = [];
 

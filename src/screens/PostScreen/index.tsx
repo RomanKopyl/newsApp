@@ -6,6 +6,7 @@ import Header from '../../components/Header';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { timeConverter } from '../../helper';
 import { StackScreenProps } from '@react-navigation/stack';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 type Props = StackScreenProps<RootStackParamList, 'PostScreen'>;
@@ -30,18 +31,20 @@ export const PostScreen: React.FC<Props> = ({ route }) => {
                     style={styles.image}
                 />
             }
-            <View style={styles.textContainer}>
-                {
-                    post?.createdAt &&
-                    <Text style={styles.date}>
-                        {timeConverter(post?.createdAt)}
+            <ScrollView>
+                <View style={styles.textContainer}>
+                    {
+                        post?.createdAt &&
+                        <Text style={styles.date}>
+                            {timeConverter(post?.createdAt)}
+                        </Text>
+                    }
+                    <Text style={styles.message}>
+                        {post?.message}
                     </Text>
-                }
-                <Text style={styles.message}>
-                    {post?.message}
-                </Text>
-            </View>
-        </SafeAreaView>
+                </View>
+            </ScrollView>
+        </SafeAreaView >
     );
 };
 
@@ -82,5 +85,6 @@ const styles = StyleSheet.create({
         fontWeight: '300',
         marginTop: 15,
         color: 'rgba(0, 0, 0, 1)',
+        paddingBottom: 30,
     },
 });
