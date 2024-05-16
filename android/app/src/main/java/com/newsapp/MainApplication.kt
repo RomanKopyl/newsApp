@@ -1,5 +1,6 @@
 package com.newsapp
 
+import android.os.Bundle;
 import android.app.Application
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
@@ -10,8 +11,15 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.load
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.soloader.SoLoader
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import org.devio.rn.splashscreen.SplashScreen;
 
 class MainApplication : Application(), ReactApplication {
+
+  protected void onCreate(Bundle savedInstanceState) {
+      SplashScreen.show(this);  // here
+      super.onCreate(savedInstanceState);
+  }
 
   override val reactNativeHost: ReactNativeHost =
       object : DefaultReactNativeHost(this) {
