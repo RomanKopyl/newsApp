@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         position: 'relative',
-        paddingHorizontal: 30
+        paddingHorizontal: 45
     },
     backButton: {
         position: 'absolute',

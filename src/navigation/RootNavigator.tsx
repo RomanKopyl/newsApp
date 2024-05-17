@@ -1,5 +1,4 @@
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
-import { DataProvider } from '../dataContext';
 import { Post } from "../models";
 import CreateScreen from "../screens/CreatePost";
 import { HomeScreen } from "../screens/HomeScreen";
@@ -21,45 +20,43 @@ const Stack = createStackNavigator<RootStackParamList>();
 export const RootNavigator: React.FC = () => {
 
     return (
-        <DataProvider>
-            <Stack.Navigator initialRouteName={'HomeScreen'} >
+        <Stack.Navigator initialRouteName={'HomeScreen'} >
 
-                <Stack.Group>
-                    <Stack.Screen
-                        name={'HomeScreen'}
-                        component={HomeScreen}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name={'PostScreen'}
-                        component={PostScreen}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name={'CreateScreen'}
-                        component={CreateScreen}
-                        options={{ headerShown: false }}
-                    />
-                </Stack.Group>
+            <Stack.Group>
+                <Stack.Screen
+                    name={'HomeScreen'}
+                    component={HomeScreen}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name={'PostScreen'}
+                    component={PostScreen}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name={'CreateScreen'}
+                    component={CreateScreen}
+                    options={{ headerShown: false }}
+                />
+            </Stack.Group>
 
-                <Stack.Group screenOptions={{
-                    presentation: 'modal',
-                    cardStyle: {
-                        backgroundColor: 'transparent',
-                        shadowColor: 'transparent'
-                    },
-                }}>
-                    <Stack.Screen
-                        name="ModalScreen"
-                        component={ModalScreen}
-                        options={{
-                            headerShown: false,
-                            detachPreviousScreen: false,
-                        }}
-                    />
-                </Stack.Group>
+            <Stack.Group screenOptions={{
+                presentation: 'modal',
+                cardStyle: {
+                    backgroundColor: 'transparent',
+                    shadowColor: 'transparent'
+                },
+            }}>
+                <Stack.Screen
+                    name="ModalScreen"
+                    component={ModalScreen}
+                    options={{
+                        headerShown: false,
+                        detachPreviousScreen: false,
+                    }}
+                />
+            </Stack.Group>
 
-            </Stack.Navigator>
-        </DataProvider>
+        </Stack.Navigator>
     );
 };

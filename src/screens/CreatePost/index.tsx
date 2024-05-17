@@ -14,7 +14,9 @@ import { Post } from '../../models';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 
 const formSchema = z.object({
-    title: z.string().min(3, 'Title must be at least 3 characters'),
+    title: z.string()
+        .min(3, 'Title must be at least 3 characters')
+        .max(30, 'Title must be maximum 30 characters'),
     imageUrl: z.string().url('Please enter a valid imageUrl'),
     link: z.string().url('Please enter a valid imageUrl'),
     message: z.string().min(8, 'Message must be at least 8 characters'),
