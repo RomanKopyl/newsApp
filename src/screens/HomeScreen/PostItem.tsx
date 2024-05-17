@@ -65,15 +65,12 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         paddingBottom: 19,
-        // shadowColor: '#000',
-        // shadowOffset: { width: 1, height: 5 },
-        // shadowOpacity: 0.40,
-        // shadowRadius: 3,
     },
     image: {
-        width: '100%',
         height: 196,
-        objectFit: 'contain'
+        objectFit: 'cover',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
     },
     textContainer: {
         paddingHorizontal: 18,
