@@ -1,5 +1,9 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
+My CV https://drive.google.com/file/d/1WZDBofJDCAgRQSxId2NMmzSO56756GAI/view?usp=sharing
+My Telegram Roman_0137
+Standard installation and launch for IOS and Android
+
 # Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
